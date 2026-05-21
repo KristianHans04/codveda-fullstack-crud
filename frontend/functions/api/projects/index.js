@@ -1,4 +1,4 @@
-import { jsonResponse, errorResponse, generateId } from './_helpers.js';
+import { jsonResponse, errorResponse, generateId } from '../_helpers.js';
 
 /**
  * GET /api/projects — List all projects
