@@ -2,53 +2,33 @@ import { useState } from 'react';
 
 export default function ProjectList({ projects, loading, error, onCreate, onSelect, onDelete, selectedId }) {
   const [name, setName] = useState('');
-  const [desc, setDesc] = useState('');
 
-  async function handleSubmit(e) {
+  async function handleCreate(e) {
     e.preventDefault();
     if (!name.trim()) return;
     try {
-      const project = await onCreate({ name: name.trim(), description: desc.trim() });
+      const p = await onCreate({ name: name.trim() });
       setName('');
-      setDesc('');
-      onSelect(project.id);
-    } catch (err) {
-      alert(err.message);
-    }
+      onSelect(p.id);
+    } catch (err) { console.error(err); }
   }
 
   return (
     <aside className="project-sidebar">
-      <h2>Projects</h2>
-      <form onSubmit={handleSubmit} className="project-form">
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="New project name"
-          maxLength={100}
-          required
-        />
-        <button type="submit">Create</button>
+      <div className="sidebar-heading">Projects</div>
+      {loading && <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>Loading...</p>}
+      {error && <p style={{ fontSize: '0.8rem', color: 'var(--color-danger)' }}>{error}</p>}
+      {projects.map(p => (
+        <div key={p.id} className={`project-item ${selectedId === p.id ? 'active' : ''}`} onClick={() => onSelect(p.id)}>
+          <span className="project-dot"></span>
+          <span className="project-name">{p.name}</span>
+          <button className="project-del" onClick={(e) => { e.stopPropagation(); onDelete(p.id); }} aria-label={`Delete ${p.name}`}>&times;</button>
+        </div>
+      ))}
+      <form className="new-project-form" onSubmit={handleCreate}>
+        <input value={name} onChange={e => setName(e.target.value)} placeholder="New project..." maxLength={50} required />
+        <button type="submit">+</button>
       </form>
-      {loading && <p className="sidebar-msg">Loading...</p>}
-      {error && <p className="sidebar-msg error-text">{error}</p>}
-      <ul className="project-list">
-        {projects.map((p) => (
-          <li key={p.id} className={p.id === selectedId ? 'active' : ''}>
-            <button className="project-btn" onClick={() => onSelect(p.id)}>
-              {p.name}
-            </button>
-            <button
-              className="project-delete"
-              onClick={() => { if (confirm('Delete this project and all its tasks?')) onDelete(p.id); }}
-              aria-label={`Delete ${p.name}`}
-            >
-              &times;
-            </button>
-          </li>
-        ))}
-      </ul>
     </aside>
   );
 }
