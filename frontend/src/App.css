@@ -1,0 +1,150 @@
+/* =======================================================
+   Kanban Board — App Styles
+   Codveda brand, mobile-first
+   ======================================================= */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:1rem;line-height:1.6;
+  color:#1b1f29;background:#f9fbff;
+  -webkit-font-smoothing:antialiased;
+}
+button{cursor:pointer;font:inherit}
+input,select,textarea{font:inherit}
+
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+/* Header */
+.app-header{
+  background:linear-gradient(135deg,#1b1f29 0%,#141720 100%);
+  color:#fff;text-align:center;padding:2rem 1.5rem 1.25rem;
+}
+.app-header h1{font-size:clamp(1.5rem,4vw,2rem);font-weight:700;margin-bottom:0.15rem}
+.app-header p{font-size:0.875rem;color:rgba(255,255,255,0.5)}
+
+/* Body Layout */
+.app-body{
+  display:grid;grid-template-columns:1fr;gap:1.5rem;
+  padding:1.5rem 1.5rem 2rem;
+}
+@media(min-width:768px){
+  .app-body{grid-template-columns:260px 1fr}
+}
+
+/* Sidebar */
+.project-sidebar{
+  background:#fff;border:1px solid #e0e3eb;border-radius:12px;
+  padding:1.25rem;height:fit-content;
+}
+.project-sidebar h2{font-size:1rem;font-weight:700;margin-bottom:0.75rem;color:#1b1f29}
+.project-form{display:flex;gap:0.5rem;margin-bottom:1rem}
+.project-form input{
+  flex:1;padding:0.55rem 0.75rem;border:1.5px solid #e0e3eb;border-radius:8px;
+  font-size:0.8125rem;
+}
+.project-form input:focus{border-color:#2563eb;outline:none}
+.project-form button{
+  padding:0.55rem 0.85rem;background:#2563eb;color:#fff;border:none;
+  border-radius:8px;font-weight:600;font-size:0.8125rem;white-space:nowrap;
+}
+.project-form button:hover{background:#103eb2}
+
+.project-list{display:flex;flex-direction:column;gap:0.25rem}
+.project-list li{
+  display:flex;align-items:center;gap:0.25rem;
+  border-radius:6px;overflow:hidden;
+}
+.project-list li.active{background:rgba(37,99,235,0.06)}
+.project-btn{
+  flex:1;text-align:left;padding:0.5rem 0.65rem;
+  border:none;background:transparent;font-size:0.8125rem;
+  font-weight:500;color:#4b4f58;border-radius:6px;
+  transition:color 150ms ease;
+}
+.project-btn:hover,.project-list li.active .project-btn{color:#2563eb;font-weight:600}
+.project-delete{
+  width:28px;height:28px;border:none;background:transparent;
+  font-size:1.1rem;color:#4b4f58;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+}
+.project-delete:hover{color:#cf2e2e;background:rgba(207,46,46,0.08)}
+
+.sidebar-msg{font-size:0.8125rem;color:#4b4f58;padding:0.5rem 0}
+.error-text{color:#cf2e2e}
+
+/* Board Area */
+.board-area{min-height:300px}
+.board-msg{
+  text-align:center;padding:3rem 1rem;
+  color:#4b4f58;font-size:0.9375rem;
+}
+
+/* Add Task Form */
+.add-task-form{
+  display:flex;gap:0.5rem;margin-bottom:1.25rem;
+}
+.add-task-form input{
+  flex:1;padding:0.6rem 0.85rem;border:1.5px solid #e0e3eb;
+  border-radius:8px;font-size:0.875rem;
+}
+.add-task-form input:focus{border-color:#2563eb;outline:none}
+.add-task-form button{
+  padding:0.6rem 1rem;background:#2563eb;color:#fff;border:none;
+  border-radius:8px;font-weight:600;font-size:0.875rem;
+}
+.add-task-form button:hover{background:#103eb2}
+
+/* Kanban Columns */
+.columns{
+  display:grid;grid-template-columns:1fr;gap:1rem;
+}
+@media(min-width:640px){
+  .columns{grid-template-columns:repeat(3,1fr)}
+}
+
+.column{
+  background:#fff;border:1px solid #e0e3eb;border-radius:12px;
+  padding:1rem;min-height:200px;
+}
+.column-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:0.75rem;padding-bottom:0.5rem;
+  border-bottom:2px solid #e0e3eb;
+}
+.column-header h3{font-size:0.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.column-todo .column-header{border-bottom-color:#2563eb}
+.column-in_progress .column-header{border-bottom-color:#fcb900}
+.column-done .column-header{border-bottom-color:#00d084}
+.count{
+  font-size:0.6875rem;font-weight:700;color:#4b4f58;
+  background:#f0f1f5;border-radius:9999px;padding:0.1rem 0.5rem;
+}
+
+.column-body{display:flex;flex-direction:column;gap:0.5rem}
+.column-empty{font-size:0.8125rem;color:#999;text-align:center;padding:1rem 0}
+
+/* Task Card */
+.task-card{
+  background:#f9fbff;border:1px solid #e0e3eb;border-radius:8px;
+  padding:0.75rem;
+}
+.task-title{font-size:0.875rem;font-weight:600;color:#1b1f29;margin-bottom:0.25rem}
+.task-desc{font-size:0.75rem;color:#4b4f58;margin-bottom:0.5rem;line-height:1.45}
+.task-actions{display:flex;gap:0.35rem}
+.task-actions button{
+  padding:0.3rem 0.6rem;font-size:0.6875rem;font-weight:600;
+  border:none;border-radius:4px;
+}
+.move-btn{background:rgba(37,99,235,0.08);color:#2563eb}
+.move-btn:hover{background:rgba(37,99,235,0.15)}
+.del-btn{background:transparent;color:#4b4f58}
+.del-btn:hover{color:#cf2e2e;background:rgba(207,46,46,0.08)}
+
+/* Footer */
+.app-footer{
+  text-align:center;padding:1.5rem 0;
+  border-top:1px solid #e0e3eb;
+  color:#4b4f58;font-size:0.8125rem;
+}
