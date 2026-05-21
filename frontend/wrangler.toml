@@ -1,0 +1,11 @@
+# Wrangler configuration for Cloudflare Pages with D1
+# This project uses Pages Functions (not standalone Workers)
+# for same-origin API access.
+
+name = "codveda-kanban"
+compatibility_date = "2024-12-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "codveda-kanban-db"
+database_id = "YOUR_D1_DATABASE_ID"
