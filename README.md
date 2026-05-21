@@ -67,18 +67,24 @@ Level-3-Fullstack-CRUD/
 | PUT | `/api/tasks/:id` | Update task title/description/status |
 | DELETE | `/api/tasks/:id` | Delete a task |
 
+## Live Deployment
+
+| Environment | URL |
+|---|---|
+| Cloudflare Pages | https://codveda-kanban.pages.dev |
+| Custom Domain | https://kanban.kristianhans.com |
+
+Deployed via **GitHub auto-deploy**: every push to `main` triggers a new Cloudflare Pages build automatically.
+
 ## Local Development
 
 ```bash
 cd frontend
 npm install
 
-# Create a local D1 database
-npx wrangler d1 create codveda-kanban-db
-# Update database_id in wrangler.toml with the returned ID
-
-# Apply the schema
-npx wrangler d1 execute codveda-kanban-db --local --file=../database/schema.sql
+# The shared codveda-db D1 database is already provisioned in production.
+# For local dev, create a local D1 instance:
+npx wrangler d1 execute codveda-db --local --file=../database/schema.sql
 
 # Start local dev server (Vite + Pages Functions + D1)
 npx wrangler pages dev dist -- npm run dev
@@ -86,20 +92,29 @@ npx wrangler pages dev dist -- npm run dev
 
 ## Deployment to Cloudflare
 
+This project is deployed to Cloudflare Pages with GitHub integration.
+The D1 database (`codveda-db`, shared with Level-3-User-Auth) is already bound
+under the `DB` environment variable.
+
 ```bash
-# 1. Create the D1 database (if not created)
-npx wrangler d1 create codveda-kanban-db
-# Copy the database_id into wrangler.toml
+# The shared D1 database (codveda-db) was created once for all Level-3 projects:
+# npx wrangler d1 create codveda-db
+# DB ID: 3861c2d8-7327-4032-81f6-36e91bb0ddad
 
-# 2. Apply schema to production D1
-npx wrangler d1 execute codveda-kanban-db --file=../database/schema.sql
+# Apply/re-apply the merged schema to production D1 (run from repo root):
+npx wrangler d1 execute codveda-db --remote --file=./database/schema.sql
 
-# 3. Build and deploy to Cloudflare Pages
+# Set JWT secret (already done in production):
+echo "$JWT_SECRET" | npx wrangler pages secret put JWT_SECRET --project-name codveda-kanban
+
+# Build and deploy manually (normally handled by GitHub auto-deploy):
+cd frontend
 npm run build
 npx wrangler pages deploy dist --project-name=codveda-kanban
 
-# The app will be available at:
+# The app is live at:
 # https://codveda-kanban.pages.dev
+# https://kanban.kristianhans.com
 ```
 
 ## Database Schema
