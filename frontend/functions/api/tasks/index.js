@@ -17,6 +17,7 @@ export async function onRequestGet(context) {
     ).bind(projectId).all();
     return jsonResponse(results);
   } catch (err) {
+    console.error("[CODVEDA-CRUD] Failed to fetch tasks:", err instanceof Error ? err.message : err);
     return errorResponse('Failed to fetch tasks', 500);
   }
 }
@@ -59,6 +60,7 @@ export async function onRequestPost(context) {
 
     return jsonResponse({ id, project_id: projectId, title, description, status, position, created_at: now, updated_at: now }, 201);
   } catch (err) {
+    console.error("[CODVEDA-CRUD] Failed to create task:", err instanceof Error ? err.message : err);
     return errorResponse('Failed to create task', 500);
   }
 }

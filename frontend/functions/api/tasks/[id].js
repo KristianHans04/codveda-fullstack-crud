@@ -47,6 +47,7 @@ export async function onRequestPut(context) {
       updated_at: now,
     });
   } catch (err) {
+    console.error("[CODVEDA-CRUD] Failed to update task:", err instanceof Error ? err.message : err);
     return errorResponse('Failed to update task', 500);
   }
 }
@@ -62,6 +63,7 @@ export async function onRequestDelete(context) {
     if (result.changes === 0) return errorResponse('Task not found', 404);
     return jsonResponse({ deleted: true });
   } catch (err) {
+    console.error("[CODVEDA-CRUD] Failed to delete task:", err instanceof Error ? err.message : err);
     return errorResponse('Failed to delete task', 500);
   }
 }

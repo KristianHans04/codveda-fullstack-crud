@@ -21,6 +21,7 @@ export async function onRequestGet(context) {
 
     return jsonResponse({ ...project, tasks });
   } catch (err) {
+    console.error("[CODVEDA-CRUD] Failed to fetch project:", err instanceof Error ? err.message : err);
     return errorResponse('Failed to fetch project', 500);
   }
 }
@@ -45,6 +46,7 @@ export async function onRequestPut(context) {
 
     return jsonResponse({ id: projectId, name, description, updated_at: now });
   } catch (err) {
+    console.error("[CODVEDA-CRUD] Failed to update project:", err instanceof Error ? err.message : err);
     return errorResponse('Failed to update project', 500);
   }
 }
@@ -60,6 +62,7 @@ export async function onRequestDelete(context) {
     if (result.changes === 0) return errorResponse('Project not found', 404);
     return jsonResponse({ deleted: true });
   } catch (err) {
+    console.error("[CODVEDA-CRUD] Failed to delete project:", err instanceof Error ? err.message : err);
     return errorResponse('Failed to delete project', 500);
   }
 }
